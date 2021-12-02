@@ -4,3 +4,7 @@ yarn.lock
 build/darwin/*
 build/linux/*
 build/win32/*
+certs/*
+pw.js
+darwin_darwin.provisionprofile
+.DS_Store

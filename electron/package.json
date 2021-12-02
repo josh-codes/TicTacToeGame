@@ -7,11 +7,11 @@
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
+    "appdmg": "^0.6.2",
     "autoprefixer": "^10.4.0",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.5.1",
     "electron": "^16.0.2",
-    "electron-installer-dmg": "^3.0.0",
     "electron-packager": "^15.4.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
@@ -26,14 +26,8 @@
     "dev": "electron . & webpack --watch",
     "build": "webpack build",
     "open": "electron .",
-	"clean::unix": "rm -rf ../build/darwin/* && rm -rf ../build/linux/* && rm -rf ../build/win32/*",
-	"build::macos": "yarn build && yarn build::macos::64 && yarn build::macos::arm",
-    "build::macos::64": "yarn build::macos::64::package && yarn build::macos::64::dmg",
-    "build::macos::arm": "yarn build::macos::arm::package && yarn build::macos::arm::dmg",
-    "build::macos::64::package": "electron-packager . TicTacToe --asar --icon=content/icon.icns --platform=darwin --arch=x64 --out ../build/darwin",
-    "build::macos::arm::package": "electron-packager . TicTacToe --asar --icon=content/icon.icns --platform=darwin --arch=arm64 --out ../build/darwin",
-    "build::macos::64::dmg": "electron-installer-dmg ../build/darwin/TicTacToe-darwin-x64/TicTacToe.app TicTacToe --out ../build/darwin/TicTacToe-darwin-x64",
-    "build::macos::arm::dmg": "electron-installer-dmg ../build/darwin/TicTacToe-darwin-arm64/TicTacToe.app TicTacToe --out ../build/darwin/TicTacToe-darwin-arm64"
+    "clean::unix": "rm -rf ../build/darwin/* && rm -rf ../build/linux/* && rm -rf ../build/win32/*",
+    "build::macos": "node package darwin"
   },
   "dependencies": {
     "react": "^17.0.2",

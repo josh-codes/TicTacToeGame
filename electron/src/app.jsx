@@ -5,11 +5,13 @@ import mp3 from './ES_hm.mp3';
 const App = () => {
 	const [type, setType] = useState(1);
 	const [appState, setAppState] = useState(0);
-	const [isPlaying, setIsPlaying] = useState(true);
+	const [isPlaying, setIsPlaying] = useState(localStorage.getItem('disableMusic') !== "true");
 	const [audio] = useState(new Audio(mp3));
 	useEffect(() => {
 		audio.loop = true;
-		audio.play();
+		if (isPlaying) {
+			audio.play();
+		}
 	}, []);
 	return (
 		<div className="w-full h-full bg-gray-900 grid place-items-center">
@@ -70,6 +72,7 @@ const App = () => {
 			<button onClick={()=>{
 				if (audio) {
 					setIsPlaying(!isPlaying);
+					localStorage.setItem('disableMusic', isPlaying ? "true" : "false")
 					isPlaying || audio.play();
 					isPlaying && audio.pause();
 				}
