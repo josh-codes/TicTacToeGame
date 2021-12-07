@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, autoUpdater, dialog } = require("electron");
+const { app, BrowserWindow, Menu, autoUpdater } = require("electron");
 
 const devMode = !app.isPackaged;
 
@@ -14,7 +14,7 @@ app.setAboutPanelOptions({
 	applicationName: "Tic Tac Toe",
 	applicationVersion: app.getVersion(),
 	copyright: "Copyright NullifiedSh 2022"
-})
+});
 
 app.on("ready", ()=>{
 	const isMac = process.platform === "darwin";
@@ -46,29 +46,19 @@ app.on("ready", ()=>{
 				{ role: 'quit' }
 		]}, ...template];
 	}
-	let window = new BrowserWindow({
+	const window = new BrowserWindow({
 		width:           750,
 		height:          750,
 		resizable:       false,
-		icon:            __dirname+"/content/icon.png",
+		icon:            "content/icon.png",
 		webPreferences: {
 			sandbox:     true,
 		}
 	});
 	const menu = Menu.buildFromTemplate(template);
 	Menu.setApplicationMenu(menu);
-	window.loadURL(`file//${__dirname}/index.html`);
+	window.loadFile(__dirname+'/dist/index.html');
 });
 autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-	const dialogOpts = {
-		type: 'info',
-		buttons: ['Restart', 'Later'],
-		title: 'Application Update',
-		message: process.platform === 'win32' ? releaseNotes : releaseName,
-		detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-	}
-
-	dialog.showMessageBox(dialogOpts).then((returnValue) => {
-		if (returnValue.response === 0) autoUpdater.quitAndInstall()
-	})
+	autoUpdater.quitAndInstall()
 })
