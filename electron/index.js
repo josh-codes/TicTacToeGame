@@ -1,14 +1,16 @@
-const { app, BrowserWindow, Menu, autoUpdater } = require("electron");
+const { app, BrowserWindow, Menu } = require("electron");
 
-const devMode = !app.isPackaged;
+const devMode = false;
 
-const updateUrl = `https://update.electronjs.org/josh-codes/TicTacToeGame/${process.platform}-${process.arch}/${app.getVersion()}`;
+// const updateUrl = `https://update.electronjs.org/josh-codes/TicTacToeGame/${process.platform}-${process.arch}/${app.getVersion()}`;
 
-devMode || autoUpdater.setFeedURL(updateUrl);
+// devMode || autoUpdater.setFeedURL(updateUrl);
 
 setInterval(() => {
-	devMode || autoUpdater.checkForUpdates();
+	// devMode || autoUpdater.checkForUpdates();
 }, 3600000)
+
+
 
 app.setAboutPanelOptions({
 	applicationName: "Tic Tac Toe",
@@ -25,7 +27,7 @@ app.on("ready", ()=>{
 				{ role: "about" },
 				isMac ? { role: "close" } : { role: "quit" }, 
 				!devMode ? { label: "Check for updates", onclick: () => {
-					devMode || autoUpdater.checkForUpdates();
+					// devMode || autoUpdater.checkForUpdates();
 				} } : { role: "toggleDevTools" },
 				devMode ? { role: "reload" } : { role: 'forceReload' },
 			],
@@ -59,6 +61,6 @@ app.on("ready", ()=>{
 	Menu.setApplicationMenu(menu);
 	window.loadFile(__dirname+'/dist/index.html');
 });
-autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-	autoUpdater.quitAndInstall()
-})
+// autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+// 	autoUpdater.quitAndInstall()
+// })
